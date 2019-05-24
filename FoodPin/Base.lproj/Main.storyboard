@@ -41,7 +41,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="f3Y-zg-AIk">
-                                                    <rect key="frame" x="75" y="0.0" width="293" height="58.5"/>
+                                                    <rect key="frame" x="75" y="0.0" width="258" height="58.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6UI-CV-m0L">
                                                             <rect key="frame" x="0.0" y="0.0" width="47" height="20.5"/>
@@ -63,6 +63,13 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Cdd-Mx-GU7">
+                                                    <rect key="frame" x="348" y="0.0" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="8gD-b7-tQ0"/>
+                                                        <constraint firstAttribute="height" constant="20" id="cUS-ea-DDq"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                         </stackView>
                                     </subviews>
@@ -74,6 +81,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="heartImageView" destination="Cdd-Mx-GU7" id="aUw-NS-vvF"/>
                                     <outlet property="locationlabel" destination="Z7j-ic-EkA" id="OOU-6C-1W1"/>
                                     <outlet property="nameLabel" destination="6UI-CV-m0L" id="oTe-Oh-zMQ"/>
                                     <outlet property="thumbnailImageView" destination="Wnp-b8-MtC" id="E9g-ec-2dW"/>

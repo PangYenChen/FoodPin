@@ -18,6 +18,7 @@ class RestaurantTableViewController: UITableViewController {
     
     var restaurantTypes = ["Coffee & Tea Shop", "Cafe", "Tea House", "Austrian / Causual Drink", "French", "Bakery", "Bakery", "Chocolate", "Cafe", "American / Seafood", "American", "American", "Breakfast & Brunch", "Coffee & Tea", "Coffee & Tea", "Latin American", "Spanish", "Spanish", "Spanish", "British", "Thai"]
     
+    var restaurantIsVisited = Array<Bool>.init(repeating: false, count: 21)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,10 +38,45 @@ class RestaurantTableViewController: UITableViewController {
         cell.locationlabel.text = restaurantLocations[indexPath.row]
         cell.typelabel.text = restaurantTypes[indexPath.row]
         cell.thumbnailImageView.image = UIImage(named: restaurantImages[indexPath.row])
+        cell.heartImageView.image = restaurantIsVisited[indexPath.row] ? UIImage(named: "heart-tick") : nil
         
         return cell
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let optionMenu = UIAlertController(title: "this is title" , message: "what do you want to do?", preferredStyle: .actionSheet)
+        
+        if let popoverController = optionMenu.popoverPresentationController {
+            if let cell = tableView.cellForRow(at: indexPath) {
+                popoverController.sourceView = cell
+                popoverController.sourceRect = cell.bounds
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "cancel", style: .cancel, handler: nil)
+        optionMenu.addAction(cancelAction)
+        
+        let callAction = UIAlertAction(title: "call", style: .default) { (_) in
+            let alertMessage = UIAlertController(title: "service unavailable", message: "sorry, the call feature is not avaliable yet. Please retry later.", preferredStyle: .alert)
+            alertMessage.addAction(UIAlertAction(title: "ok", style: .default, handler: nil))
+            self.present(alertMessage, animated: true, completion: nil)
+        }
+        optionMenu.addAction(callAction)
+        
+        let title = restaurantIsVisited[indexPath.row] ? "undo check in" : "check in"
+        
+        let checkInAction = UIAlertAction(title: title, style: .default) { (_) in
+            let cell = tableView.cellForRow(at: indexPath) as! RestaurantTableViewCell
+            self.restaurantIsVisited[indexPath.row] = !self.restaurantIsVisited[indexPath.row]
+            cell.heartImageView.image = self.restaurantIsVisited[indexPath.row] ? UIImage(named: "heart-tick") : nil
+        }
+        optionMenu.addAction(checkInAction)
+        
+        present(optionMenu, animated: true) {
+            tableView.deselectRow(at: indexPath, animated: false)
+        }
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
