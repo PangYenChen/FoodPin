@@ -87,19 +87,6 @@ class RestaurantTableViewController: UITableViewController {
     */
 
     
-    // Override to support editing the table view.
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            restaurantNames.remove(at: indexPath.row)
-//            restaurantLocations.remove(at: indexPath.row)
-//            restaurantTypes.remove(at: indexPath.row)
-//            restaurantIsVisited.remove(at: indexPath.row)
-//
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//        } else if editingStyle == .insert {
-//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-//        }
-//    }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "delete") { (action, sourveView, completion) in
@@ -149,6 +136,22 @@ class RestaurantTableViewController: UITableViewController {
         return swipeConfiguration
     }
     
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let checkInAction = UIContextualAction(style: .normal, title: "check in") { (action, sourceView, completion) in
+            let cell = tableView.cellForRow(at: indexPath) as! RestaurantTableViewCell
+            self.restaurantIsVisited[indexPath.row] = !self.restaurantIsVisited[indexPath.row]
+            cell.heartImageView.image = self.restaurantIsVisited[indexPath.row] ? UIImage(named: "heart-tick") : nil
+            
+            completion(true)
+        }
+        
+        checkInAction.backgroundColor = UIColor(red: 38.0/255.0, green: 162.0/255.0, blue: 78.0/255.0, alpha: 1.0)
+        checkInAction.image = restaurantIsVisited[indexPath.row] ? UIImage(named: "undo") : UIImage(named: "tick")
+        
+        let swipeConfiguration = UISwipeActionsConfiguration(actions: [checkInAction])
+        return swipeConfiguration
+    }
     
 
     /*
